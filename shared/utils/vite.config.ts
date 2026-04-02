@@ -9,7 +9,7 @@ export default mergeConfig(
     build: {
       lib: {
         entry: resolve(__dirname, 'src/index.ts'),
-        name: '<project-name>_utilities',
+        name: 'orval-test_utilities',
       },
       // Rollup conf
       rollupOptions: {

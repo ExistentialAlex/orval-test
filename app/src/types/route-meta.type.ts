@@ -1,5 +1,5 @@
-import type { MessageSchema } from '<project-name>-i18n';
-import type { ShapeOf } from '<project-name>-types';
+import type { MessageSchema } from 'orval-test-i18n';
+import type { ShapeOf } from 'orval-test-types';
 import type { RouteLocationNormalized } from 'vue-router';
 import type { RouteNamedMap } from 'vue-router/auto-routes';
 import type { AppBreadcrumb } from './breadcrumb.type';

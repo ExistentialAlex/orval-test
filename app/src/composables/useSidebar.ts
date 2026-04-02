@@ -6,7 +6,7 @@ import { useI18n } from 'vue-i18n';
 export const useSidebar = () => {
   const { t } = useI18n();
 
-  const open = useLocalStorage('<project-name>-sidebar', true);
+  const open = useLocalStorage('orval-test-sidebar', true);
 
   const toggleSidebar = () => (open.value = !open.value);
 

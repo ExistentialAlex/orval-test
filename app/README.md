@@ -1,6 +1,6 @@
-# <project-name>-app
+# orval-test-app
 
-This is a [VueJS](https://vuejs.org/) UI for the <project-name> application. It contains the frontend views, components and logic necessary to interact with the backend services.
+This is a [VueJS](https://vuejs.org/) UI for the orval-test application. It contains the frontend views, components and logic necessary to interact with the backend services.
 
 This project uses [Vite](https://vitejs.dev/) for development and build tooling.
 

@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: <platform-team-name>-configmap
+  name: orval-test-configmap
 data:
   config.json: |
     {
-      "VITE_API_BASE_URL": "https://<platform-team-name>-server.internal.test.adtechplatform.sky.com/api"
+      "VITE_API_BASE_URL": "https://orval-test-server.internal.test.adtechplatform.sky.com/api"
     }

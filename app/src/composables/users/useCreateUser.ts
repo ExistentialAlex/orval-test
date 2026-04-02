@@ -1,5 +1,5 @@
-import type { CreateUser, User } from '<project-name>-schemas';
 import type { FetchError } from 'ofetch';
+import type { CreateUser, User } from 'orval-test-schemas';
 import type { MaybeRefOrGetter } from 'vue';
 import { useMutation } from '@pinia/colada';
 import { toValue } from 'vue';

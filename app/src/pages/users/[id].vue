@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import type { UpdateUser } from '<project-name>-schemas';
 import type { FetchError } from 'ofetch';
-import { UpdateUserSchema } from '<project-name>-schemas';
+import type { UpdateUser } from 'orval-test-schemas';
+import { UpdateUserSchema } from 'orval-test-schemas';
 import { definePage } from 'unplugin-vue-router/runtime';
 import { ref, useTemplateRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';

@@ -1,4 +1,4 @@
-import { vueConfig } from '<project-name>-eslint-config';
+import { vueConfig } from 'orval-test-eslint-config';
 
 export default vueConfig.override('antfu/vue/rules', {
   rules: {

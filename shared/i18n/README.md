@@ -1,14 +1,14 @@
-# <project-name>-i18n
+# orval-test-i18n
 
 This directory contains the i18n schema definitions used across the project.
 These schemas are shared between the app and server.
 
 ## Usage
 
-To use these schemas in your project, import them from the <project-name>-i18n package. For example:
+To use these schemas in your project, import them from the orval-test-i18n package. For example:
 
 ```typescript
-import { MessageSchema } from '<project-name>-i18n';
+import { MessageSchema } from 'orval-test-i18n';
 ```
 
 ## Structure

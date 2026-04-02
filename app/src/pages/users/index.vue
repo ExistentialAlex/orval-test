@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { PaginationQuery, User } from '<project-name>-schemas';
 import type { DropdownMenuItem, TableColumn } from '@nuxt/ui';
 import type { Row } from '@tanstack/vue-table';
+import type { PaginationQuery, User } from 'orval-test-schemas';
 import { definePage } from 'unplugin-vue-router/runtime';
 import { watch } from 'vue';
 import { useI18n } from 'vue-i18n';

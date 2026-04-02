@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Auth } from '<project-name>-schemas';
-import { AuthSchema } from '<project-name>-schemas';
-import { asFetchError, doublet } from '<project-name>-utils';
+import type { Auth } from 'orval-test-schemas';
+import { AuthSchema } from 'orval-test-schemas';
+import { asFetchError, doublet } from 'orval-test-utils';
 import { definePage } from 'unplugin-vue-router/runtime';
 import { reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';

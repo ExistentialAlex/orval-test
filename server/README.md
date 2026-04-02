@@ -1,6 +1,6 @@
-# <project-name>-server
+# orval-test-server
 
-This is a [Hono](https://hono.dev/) server that acts as the Backend For Frontend (BFF) for the <project-name> application. It provides API endpoints and server-side logic tailored for the frontend needs of the project.
+This is a [Hono](https://hono.dev/) server that acts as the Backend For Frontend (BFF) for the orval-test application. It provides API endpoints and server-side logic tailored for the frontend needs of the project.
 
 This project uses [Vite](https://vitejs.dev/) for development and build tooling.
 

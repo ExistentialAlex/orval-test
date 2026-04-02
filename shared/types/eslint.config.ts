@@ -1,3 +1,3 @@
-import { baseConfig } from '<project-name>-eslint-config';
+import { baseConfig } from 'orval-test-eslint-config';
 
 export default baseConfig;

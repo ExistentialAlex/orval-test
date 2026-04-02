@@ -1,5 +1,5 @@
-import type { Enum } from '<project-name>-types';
 import type { StatusCode } from 'hono/utils/http-status';
+import type { Enum } from 'orval-test-types';
 
 export const PrefixEnum = {
   Outgoing: '-->',

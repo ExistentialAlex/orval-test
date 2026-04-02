@@ -1,4 +1,4 @@
-import type { UserSession } from '<project-name>-types';
+import type { UserSession } from 'orval-test-types';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { useFetch } from '@/core';

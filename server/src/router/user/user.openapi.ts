@@ -1,5 +1,5 @@
-import { PaginationResponseSchema, UserSchema } from '<project-name>-schemas';
 import { describeRoute, resolver } from 'hono-openapi';
+import { PaginationResponseSchema, UserSchema } from 'orval-test-schemas';
 import z from 'zod';
 
 /**

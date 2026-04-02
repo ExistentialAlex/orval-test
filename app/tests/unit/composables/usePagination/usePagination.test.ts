@@ -1,9 +1,9 @@
 import type { VueWrapper } from '@vue/test-utils';
-import { en } from '<project-name>-i18n';
 import { $fetch } from '@mocks/fetch.mock';
 import { PiniaColada } from '@pinia/colada';
 import { createTestingPinia } from '@pinia/testing';
 import { flushPromises, mount } from '@vue/test-utils';
+import { en } from 'orval-test-i18n';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { nextTick } from 'vue';
 import { createI18n } from 'vue-i18n';

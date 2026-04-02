@@ -2,17 +2,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: <platform-team-name>-server
+  name: orval-test-server
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: <platform-team-name>-server
+      app: orval-test-server
   template:
     metadata:
       annotations:
       labels:
-        app: <platform-team-name>-server
+        app: orval-test-server
     spec:
       topologySpreadConstraints:
         - maxSkew: 1
@@ -20,16 +20,16 @@ spec:
           whenUnsatisfiable: ScheduleAnyway
           labelSelector:
             matchLabels:
-              app: <platform-team-name>
+              app: orval-test
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
           whenUnsatisfiable: ScheduleAnyway
           labelSelector:
             matchLabels:
-              app: <platform-team-name>-server
+              app: orval-test-server
       containers:
-        - name: <platform-team-name>-server
-          image: europe-west1-docker.pkg.dev/uk-cti-adtech-platform-test/<platform-team-name>/<platform-team-name>-server:${GIT_TAG}
+        - name: orval-test-server
+          image: europe-west1-docker.pkg.dev/uk-cti-adtech-platform-test/orval-test/orval-test-server:${GIT_TAG}
           imagePullPolicy: Always
           securityContext:
             readOnlyRootFilesystem: true

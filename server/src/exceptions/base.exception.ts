@@ -1,7 +1,7 @@
-import type { MessageSchema } from '<project-name>-i18n';
-import type { ShapeOf } from '<project-name>-types';
 import type { Context } from 'hono';
 import type { ContentfulStatusCode } from 'hono/utils/http-status';
+import type { MessageSchema } from 'orval-test-i18n';
+import type { ShapeOf } from 'orval-test-types';
 import { useTranslation } from '@intlify/hono';
 import defu from 'defu';
 // server/src/exceptions/base.exception.ts

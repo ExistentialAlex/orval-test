@@ -6,7 +6,7 @@ resource_types:
       tag: v0.16.2
       username: _json_key
       password: |
-        ((<platform-keyfile-name>.keyfile))
+        ((orval-test-keyfile.keyfile))
 
 resources:
   - name: adtech-adf-ui
@@ -14,7 +14,7 @@ resources:
     icon: github
     webhook_token: ((adtech-adf-ui-webhook-token))
     source:
-      uri: https://github.com/sky-uk/<repository-name>.git
+      uri: https://github.com/sky-uk/orval-test.git
       branch: main
       fetch_tags: true
       username: svc-adtech-cicd-bot
@@ -86,8 +86,8 @@ jobs:
         file: adtech-adf-ui/app/ci/pipelines/tasks/push-image.yaml
         vars:
           repo_name: adtech-adf-ui
-          google_json_credentials: ((<platform-keyfile-name>.keyfile))
-          target_image: europe-west1-docker.pkg.dev/uk-cti-adtech-platform-test/<platform-team-name>/<platform-team-name>-app
+          google_json_credentials: ((orval-test-keyfile.keyfile))
+          target_image: europe-west1-docker.pkg.dev/uk-cti-adtech-platform-test/orval-test/orval-test-app
       - task: deploy-to-test
         privileged: true
         file: adtech-adf-ui/app/ci/pipelines/tasks/run-make.yaml
@@ -97,7 +97,7 @@ jobs:
           git_tag: ((.:tag))
           target_env: test
           make_target: deploy-app
-          gcp_sa_key_secret_path: ((<platform-keyfile-name>.keyfile))
+          gcp_sa_key_secret_path: ((orval-test-keyfile.keyfile))
           github_pat_token_secret_name: ((github_pat))
       - task: stubbed-promote-to-stage
         privileged: true
@@ -108,5 +108,5 @@ jobs:
           git_tag: ((.:tag))
           target_env: test
           make_target: mock-command
-          gcp_sa_key_secret_path: ((<platform-keyfile-name>.keyfile))
+          gcp_sa_key_secret_path: ((orval-test-keyfile.keyfile))
           github_pat_token_secret_name: ((github_pat))

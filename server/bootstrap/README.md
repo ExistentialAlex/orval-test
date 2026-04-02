@@ -41,8 +41,8 @@ in [concourse](https://concourse.at.sky/teams/adtech-order-planner/pipelines/adt
 
 This pipeline once kicked off should create two pipelines:
 
-- `<project-name>-server-pr` pipeline
-- `<project-name>-server-deploy` pipeline
+- `orval-test-server-pr` pipeline
+- `orval-test-server-deploy` pipeline
 
 Each pipeline is configured to execute tests and deploy reference app successfully to the platform (as per cookiecutter
 configuration). If your pipelines are not generated look at

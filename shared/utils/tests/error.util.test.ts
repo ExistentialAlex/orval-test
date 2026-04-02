@@ -1,4 +1,4 @@
-import type { StandardSchemaValidationError } from '<project-name>-types';
+import type { StandardSchemaValidationError } from 'orval-test-types';
 import { FetchError } from 'ofetch';
 import { describe, expect, it } from 'vitest';
 import {

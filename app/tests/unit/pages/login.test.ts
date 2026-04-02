@@ -1,11 +1,11 @@
 import type { VueWrapper } from '@vue/test-utils';
-import type { UserSession } from '<project-name>-types';
+import type { UserSession } from 'orval-test-types';
 import { $fetch, createMockFetchInstance } from '@mocks/fetch.mock';
 import ui from '@nuxt/ui/vue-plugin';
 import { createTestingPinia } from '@pinia/testing';
 import { flushPromises, mount } from '@vue/test-utils';
 import { FetchError } from 'ofetch';
-import { en } from '<project-name>-i18n';
+import { en } from 'orval-test-i18n';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createI18n } from 'vue-i18n';
 import { getRouter } from 'vue-router-mock';

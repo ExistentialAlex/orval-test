@@ -1,4 +1,4 @@
-# <project-name>-eslint-config
+# orval-test-eslint-config
 
 Shared ESLint configuration for the AdTech ADF monorepo using `@antfu/eslint-config`.
 
@@ -8,7 +8,7 @@ Shared ESLint configuration for the AdTech ADF monorepo using `@antfu/eslint-con
 
 ```typescript
 // eslint.config.ts
-import { baseConfig } from '<project-name>-eslint-config';
+import { baseConfig } from 'orval-test-eslint-config';
 
 export default baseConfig;
 ```
@@ -17,7 +17,7 @@ export default baseConfig;
 
 ```typescript
 // eslint.config.ts
-import { vueConfig } from '<project-name>-eslint-config';
+import { vueConfig } from 'orval-test-eslint-config';
 
 export default vueConfig.override('antfu/vue/rules', {
   rules: {
@@ -38,7 +38,7 @@ export default vueConfig.override('antfu/vue/rules', {
 
 ```typescript
 // eslint.config.ts
-import createConfig from '<project-name>-eslint-config';
+import createConfig from 'orval-test-eslint-config';
 
 export default createConfig({ vue: true, formatters: true })
   .override('antfu/typescript/rules', {
@@ -59,7 +59,7 @@ export default createConfig({ vue: true, formatters: true })
 Each package can extend the base configuration with package-specific rules:
 
 ```typescript
-import { baseConfig } from '<project-name>-eslint-config';
+import { baseConfig } from 'orval-test-eslint-config';
 
 export default baseConfig.append({
   rules: {

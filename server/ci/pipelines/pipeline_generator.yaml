@@ -7,81 +7,81 @@ resource_types:
       tag: 1.4.2
       username: _json_key
       password: |
-        ((<platform-keyfile-name>.keyfile))
+        ((orval-test-keyfile.keyfile))
 
 resources:
-  - name: <project-name>-server
+  - name: orval-test-server
     type: git
     icon: github
-    webhook_token: ((<project-name>-server-webhook-token))
+    webhook_token: ((orval-test-server-webhook-token))
     source:
-      uri: https://github.com/sky-uk/<repository-name>
+      uri: https://github.com/sky-uk/orval-test
       paths:
         - server
       branch: main
       fetch_tags: true
       username: svc-adtech-cicd-bot
       password: ((github_pat))
-  - name: <project-name>-server-webhook
+  - name: orval-test-server-webhook
     type: github-webhook-resource
     source:
       github_api: https://api.github.com
       github_token: ((github_pat))
-  - name: <project-name>-server-pr-webhook
+  - name: orval-test-server-pr-webhook
     type: github-webhook-resource
     source:
       github_api: https://api.github.com
       github_token: ((github_pat))
-  - name: <project-name>-server-self-webhook
+  - name: orval-test-server-self-webhook
     type: github-webhook-resource
     source:
       github_api: https://api.github.com
       github_token: ((github_pat))
 
 jobs:
-  - name: <project-name>-server-set-self
+  - name: orval-test-server-set-self
     plan:
-      - get: <project-name>-server
+      - get: orval-test-server
         trigger: true
-      - set_pipeline: <project-name>-server-generator
-        file: <project-name>-server/server/ci/pipelines/pipeline_generator.yaml
+      - set_pipeline: orval-test-server-generator
+        file: orval-test-server/server/ci/pipelines/pipeline_generator.yaml
       - put: create-webhook
-        resource: <project-name>-server-self-webhook
+        resource: orval-test-server-self-webhook
         params:
           org: sky-uk
-          repo: <repository-name>
-          resource_name: <project-name>-server
-          webhook_token: ((<project-name>-server-webhook-token))
+          repo: orval-test
+          resource_name: orval-test-server
+          webhook_token: ((orval-test-server-webhook-token))
           operation: create
           events: [push]
-          pipeline: <project-name>-server-generator
+          pipeline: orval-test-server-generator
 
-  - name: <project-name>-server-pipelines
+  - name: orval-test-server-pipelines
     plan:
-      - get: <project-name>-server
+      - get: orval-test-server
         trigger: true
-        passed: [<project-name>-server-set-self]
-      - set_pipeline: <project-name>-server-pr
-        file: <project-name>-server/server/ci/pipelines/check.yaml
-      - set_pipeline: <project-name>-server-deploy
-        file: <project-name>-server/server/ci/pipelines/deploy.yaml
+        passed: [orval-test-server-set-self]
+      - set_pipeline: orval-test-server-pr
+        file: orval-test-server/server/ci/pipelines/check.yaml
+      - set_pipeline: orval-test-server-deploy
+        file: orval-test-server/server/ci/pipelines/deploy.yaml
       - put: create-webhook
-        resource: <project-name>-server-webhook
+        resource: orval-test-server-webhook
         params:
           org: sky-uk
-          repo: <repository-name>
-          resource_name: <project-name>-server
-          webhook_token: ((<project-name>-server-webhook-token))
+          repo: orval-test
+          resource_name: orval-test-server
+          webhook_token: ((orval-test-server-webhook-token))
           operation: create
           events: [push]
-          pipeline: <project-name>-server-deploy
+          pipeline: orval-test-server-deploy
       - put: create-webhook-pr
-        resource: <project-name>-server-pr-webhook
+        resource: orval-test-server-pr-webhook
         params:
           org: sky-uk
-          repo: <repository-name>
-          resource_name: <project-name>-server-pr
-          webhook_token: ((<project-name>-server-webhook-token))
+          repo: orval-test
+          resource_name: orval-test-server-pr
+          webhook_token: ((orval-test-server-webhook-token))
           operation: create
           events: [pull_request]
-          pipeline: <project-name>-server-pr
+          pipeline: orval-test-server-pr

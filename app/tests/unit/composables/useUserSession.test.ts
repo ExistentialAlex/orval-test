@@ -7,7 +7,7 @@ import { useSessionStore } from '@/stores';
 
 vi.stubGlobal('open', vi.fn());
 vi.mock('vue-i18n', async () => {
-  const { en } = await import('<project-name>-i18n');
+  const { en } = await import('orval-test-i18n');
   return (await import('@mocks/i18n.mock')).mockI18n(en);
 });
 

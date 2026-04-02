@@ -1,11 +1,11 @@
 import type { ServerEnv } from '@env';
+import { Hono } from 'hono';
 import {
   CreateUserSchema,
   GetUserSchema,
   PaginationQuerySchema,
   UpdateUserSchema,
-} from '<project-name>-schemas';
-import { Hono } from 'hono';
+} from 'orval-test-schemas';
 import { requireUserSession, zValidator } from '@/middleware';
 import { useUserService } from '@/services';
 import {

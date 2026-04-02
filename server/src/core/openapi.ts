@@ -9,9 +9,9 @@ export const configureOpenAPI = (app: Hono<ServerEnv>) => {
     openAPIRouteHandler(app, {
       documentation: {
         info: {
-          title: '<project-name> API',
+          title: 'orval-test API',
           version: '0.0.0',
-          description: 'API Documentation for the <project-name>.',
+          description: 'API Documentation for the orval-test.',
         },
       },
     }),

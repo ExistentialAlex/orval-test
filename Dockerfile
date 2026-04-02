@@ -12,7 +12,7 @@ RUN corepack enable
 COPY . /usr/src/app
 WORKDIR /usr/src/app
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-RUN pnpm --filter=<project-name>-app exec playwright install --with-deps
+RUN pnpm --filter=orval-test-app exec playwright install --with-deps
 RUN pnpm run build
 
 FROM base AS build
@@ -20,8 +20,8 @@ COPY . /usr/src/app
 WORKDIR /usr/src/app
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run build
-RUN pnpm deploy --filter=<project-name>-server --prod /prod/server
-RUN pnpm deploy --filter=<project-name>-app --prod /prod/app
+RUN pnpm deploy --filter=orval-test-server --prod /prod/server
+RUN pnpm deploy --filter=orval-test-app --prod /prod/app
 
 FROM base AS server
 

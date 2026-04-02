@@ -1,11 +1,11 @@
+import type { ServerEnv } from '@env';
+import type { Context } from 'hono';
 import type {
   CreateUser,
   PaginationResponse,
   UpdateUser,
   User,
-} from '<project-name>-schemas';
-import type { ServerEnv } from '@env';
-import type { Context } from 'hono';
+} from 'orval-test-schemas';
 import { UserGetException, UserNotFoundException } from '@/exceptions';
 import { convertExternalPaginationResponse, log, paginate } from '../utils';
 

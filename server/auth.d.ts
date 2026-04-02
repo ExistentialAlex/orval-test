@@ -1,4 +1,4 @@
-import type { UserSession } from '<project-name>-types';
+import type { UserSession } from 'orval-test-types';
 import 'hono-session/global';
 
 declare module 'hono-session' {

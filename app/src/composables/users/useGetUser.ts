@@ -1,5 +1,5 @@
-import type { User } from '<project-name>-schemas';
 import type { UseQueryOptions } from '@pinia/colada';
+import type { User } from 'orval-test-schemas';
 import type { MaybeRefOrGetter } from 'vue';
 import { useQuery } from '@pinia/colada';
 import { toValue } from 'vue';

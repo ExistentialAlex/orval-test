@@ -1,6 +1,6 @@
-import { AuthSchema } from '<project-name>-schemas';
 import { useTranslation } from '@intlify/hono';
 import { Hono } from 'hono';
+import { AuthSchema } from 'orval-test-schemas';
 import { zValidator } from '@/middleware';
 import { LoginOpenApi } from './auth.openapi';
 

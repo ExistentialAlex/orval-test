@@ -1,6 +1,6 @@
-import type { KeyOfLoose } from '<project-name>-types';
 import type { DropdownMenuItem, TableColumn, TableData } from '@nuxt/ui';
 import type { Row } from '@tanstack/vue-table';
+import type { KeyOfLoose } from 'orval-test-types';
 import type { Component } from 'vue';
 import type { DateTimeOptions } from 'vue-i18n';
 import type { RouteLocationRaw } from 'vue-router';

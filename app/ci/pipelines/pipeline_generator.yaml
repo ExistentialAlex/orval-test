@@ -7,81 +7,81 @@ resource_types:
       tag: 1.4.2
       username: _json_key
       password: |
-        ((<platform-keyfile-name>.keyfile))
+        ((orval-test-keyfile.keyfile))
 
 resources:
-  - name: <project-name>-app
+  - name: orval-test-app
     type: git
     icon: github
-    webhook_token: ((<project-name>-app-webhook-token))
+    webhook_token: ((orval-test-app-webhook-token))
     source:
-      uri: https://github.com/sky-uk/<repository-name>
+      uri: https://github.com/sky-uk/orval-test
       paths:
         - app
       branch: main
       fetch_tags: true
       username: svc-adtech-cicd-bot
       password: ((github_pat))
-  - name: <project-name>-app-webhook
+  - name: orval-test-app-webhook
     type: github-webhook-resource
     source:
       github_api: https://api.github.com
       github_token: ((github_pat))
-  - name: <project-name>-app-pr-webhook
+  - name: orval-test-app-pr-webhook
     type: github-webhook-resource
     source:
       github_api: https://api.github.com
       github_token: ((github_pat))
-  - name: <project-name>-app-self-webhook
+  - name: orval-test-app-self-webhook
     type: github-webhook-resource
     source:
       github_api: https://api.github.com
       github_token: ((github_pat))
 
 jobs:
-  - name: <project-name>-app-set-self
+  - name: orval-test-app-set-self
     plan:
-      - get: <project-name>-app
+      - get: orval-test-app
         trigger: true
-      - set_pipeline: <project-name>-app-generator
-        file: <project-name>-app/app/ci/pipelines/pipeline_generator.yaml
+      - set_pipeline: orval-test-app-generator
+        file: orval-test-app/app/ci/pipelines/pipeline_generator.yaml
       - put: create-webhook
-        resource: <project-name>-app-self-webhook
+        resource: orval-test-app-self-webhook
         params:
           org: sky-uk
-          repo: <repository-name>
-          resource_name: <project-name>-app
-          webhook_token: ((<project-name>-app-webhook-token))
+          repo: orval-test
+          resource_name: orval-test-app
+          webhook_token: ((orval-test-app-webhook-token))
           operation: create
           events: [push]
-          pipeline: <project-name>-app-generator
+          pipeline: orval-test-app-generator
 
-  - name: <project-name>-app-pipelines
+  - name: orval-test-app-pipelines
     plan:
-      - get: <project-name>-app
+      - get: orval-test-app
         trigger: true
-        passed: [<project-name>-app-set-self]
-      - set_pipeline: <project-name>-app-pr
-        file: <project-name>-app/app/ci/pipelines/check.yaml
-      - set_pipeline: <project-name>-app-deploy
-        file: <project-name>-app/app/ci/pipelines/deploy.yaml
+        passed: [orval-test-app-set-self]
+      - set_pipeline: orval-test-app-pr
+        file: orval-test-app/app/ci/pipelines/check.yaml
+      - set_pipeline: orval-test-app-deploy
+        file: orval-test-app/app/ci/pipelines/deploy.yaml
       - put: create-webhook
-        resource: <project-name>-app-webhook
+        resource: orval-test-app-webhook
         params:
           org: sky-uk
-          repo: <repository-name>
-          resource_name: <project-name>-app
-          webhook_token: ((<project-name>-app-webhook-token))
+          repo: orval-test
+          resource_name: orval-test-app
+          webhook_token: ((orval-test-app-webhook-token))
           operation: create
           events: [push]
-          pipeline: <project-name>-app-deploy
+          pipeline: orval-test-app-deploy
       - put: create-webhook-pr
-        resource: <project-name>-app-pr-webhook
+        resource: orval-test-app-pr-webhook
         params:
           org: sky-uk
-          repo: <repository-name>
-          resource_name: <project-name>-app-pr
-          webhook_token: ((<project-name>-app-webhook-token))
+          repo: orval-test
+          resource_name: orval-test-app-pr
+          webhook_token: ((orval-test-app-webhook-token))
           operation: create
           events: [pull_request]
-          pipeline: <project-name>-app-pr
+          pipeline: orval-test-app-pr

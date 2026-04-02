@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { User } from '<project-name>-types';
 import type { DropdownMenuItem } from '@nuxt/ui';
+import type { User } from 'orval-test-types';
 import { useColorMode } from '@vueuse/core';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';

@@ -1,14 +1,14 @@
-# <project-name>-types
+# orval-test-types
 
 This directory contains the TypeScript types used across the project.
 These types are shared between the app and server, ensuring consistency in data structures and interfaces.
 
 ## Usage
 
-To use these types in your project, import them from the <project-name>-types package. For example:
+To use these types in your project, import them from the orval-test-types package. For example:
 
 ```typescript
-import { User } from '<project-name>-types';
+import { User } from 'orval-test-types';
 ```
 
 ## Structure

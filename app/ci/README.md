@@ -1,4 +1,4 @@
-# <project-name>-ui CI/CD
+# orval-test-ui CI/CD
 
 ## CI and Deployment
 

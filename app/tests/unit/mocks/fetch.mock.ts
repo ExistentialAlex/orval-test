@@ -1,5 +1,5 @@
-import type { DeepPartial } from '<project-name>-types';
 import type { FetchOptions } from 'ofetch';
+import type { DeepPartial } from 'orval-test-types';
 import defu from 'defu';
 import { vi } from 'vitest';
 

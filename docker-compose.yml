@@ -5,7 +5,7 @@ services:
     build:
       context: .
       target: server
-    image: europe-west1-docker.pkg.dev/uk-cti-adtech-platform-test/<platform-team-name>/<platform-team-name>-server:$GIT_TAG
+    image: europe-west1-docker.pkg.dev/uk-cti-adtech-platform-test/orval-test/orval-test-server:$GIT_TAG
     platform: linux/amd64
     ports:
       - '3000:3000'
@@ -18,7 +18,7 @@ services:
     build:
       context: .
       target: app
-    image: europe-west1-docker.pkg.dev/uk-cti-adtech-platform-test/<platform-team-name>/<platform-team-name>-app:$GIT_TAG
+    image: europe-west1-docker.pkg.dev/uk-cti-adtech-platform-test/orval-test/orval-test-app:$GIT_TAG
     platform: linux/amd64
     ports:
       - '80:80'

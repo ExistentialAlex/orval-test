@@ -1,4 +1,4 @@
-# <project-name>-server CI/CD
+# orval-test-server CI/CD
 
 ## CI and Deployment Description
 

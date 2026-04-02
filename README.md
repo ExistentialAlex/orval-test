@@ -59,8 +59,8 @@ To use this template, either click the "Use this template" button on GitHub to c
    npm run init 'your-project-name' # or yarn init, or pnpm run init
    ```
    This script will:
-   - Rename the project from `<project-name>` to your project's name.
-   - Update all occurrences of `<project-name>` in the codebase to your project's name.
+   - Rename the project from `orval-test` to your project's name.
+   - Update all occurrences of `orval-test` in the codebase to your project's name.
    - Ensure that all files are properly formatted and ready for development.
 4. Install dependencies for all packages:
    ```sh

@@ -2,7 +2,7 @@
 apiVersion: launchpad.sky.uk/v1alpha1
 kind: Gateway
 metadata:
-  name: <platform-team-name>-server
+  name: orval-test-server
 spec:
   realms:
     - name: ping
@@ -10,7 +10,7 @@ spec:
       allowInternet: false
       allowOnPrem: true
       routes:
-        - path: / # https://<platform-team-name>-server.internal.test.adtechplatform.sky.com/
+        - path: / # https://orval-test-server.internal.test.adtechplatform.sky.com/
           methods:
             - GET
             - POST
@@ -20,5 +20,5 @@ spec:
             - OPTIONS
 
   services:
-    - name: <platform-team-name>-server
+    - name: orval-test-server
       port: 3000

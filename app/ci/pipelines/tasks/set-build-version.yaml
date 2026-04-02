@@ -7,7 +7,7 @@ image_resource:
     tag: alpine
     username: _json_key
     password: |
-      ((<platform-keyfile-name>.keyfile))
+      ((orval-test-keyfile.keyfile))
 inputs:
   - name: ((repo_name))
 outputs:

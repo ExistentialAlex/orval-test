@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { CreateUser } from '<project-name>-schemas';
-import { CreateUserSchema } from '<project-name>-schemas';
+import type { CreateUser } from 'orval-test-schemas';
+import { CreateUserSchema } from 'orval-test-schemas';
 import { useI18n } from 'vue-i18n';
 
 const model = defineModel<Partial<CreateUser>>({ required: true });

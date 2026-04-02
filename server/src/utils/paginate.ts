@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
+import type { Context } from 'hono';
 import type {
   ExternalPaginationResponseSchema,
   PaginationResponseSchema,
-} from '<project-name>-schemas';
-import type { Context } from 'hono';
-import { appendQueryAndHash } from '<project-name>-utils';
+} from 'orval-test-schemas';
+import { appendQueryAndHash } from 'orval-test-utils';
 
 export const paginate = <T>(
   dataset: T[],

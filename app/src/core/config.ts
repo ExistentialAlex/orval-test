@@ -1,6 +1,6 @@
 /* eslint-disable antfu/no-top-level-await */
-import { doublet } from '<project-name>-utils';
 import { ofetch } from 'ofetch';
+import { doublet } from 'orval-test-utils';
 import { computed } from 'vue';
 
 // Retrieve the configuration file from the server

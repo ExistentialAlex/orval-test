@@ -1,11 +1,11 @@
 import type { RenderOptions } from '@testing-library/vue';
 import type { Component } from 'vue';
-import { en } from '<project-name>-i18n';
 import ui from '@nuxt/ui/vue-plugin';
 import { PiniaColada } from '@pinia/colada';
 import { createTestingPinia } from '@pinia/testing';
 import { render } from '@testing-library/vue';
 import defu from 'defu';
+import { en } from 'orval-test-i18n';
 import { createI18n } from 'vue-i18n';
 import { nuxtUiWrapper } from './nuxt-ui-wrapper';
 

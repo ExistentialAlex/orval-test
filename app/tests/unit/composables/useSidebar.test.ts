@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { useSidebar } from '@/composables';
 
 vi.mock('vue-i18n', async () => {
-  const { en } = await import('<project-name>-i18n');
+  const { en } = await import('orval-test-i18n');
   return (await import('@mocks/i18n.mock')).mockI18n(en);
 });
 vi.mock('@/utils', () => {

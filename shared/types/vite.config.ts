@@ -8,7 +8,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
-      name: '<project-name>_types',
+      name: 'orval-test_types',
     },
     // Rollup conf
     rollupOptions: {

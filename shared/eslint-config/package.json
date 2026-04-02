@@ -1,5 +1,5 @@
 {
-  "name": "<project-name>-eslint-config",
+  "name": "orval-test-eslint-config",
   "version": "1.0.0",
   "type": "module",
   "main": "index.ts",

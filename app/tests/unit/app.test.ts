@@ -5,7 +5,7 @@ import { PiniaColada } from '@pinia/colada';
 import { createTestingPinia } from '@pinia/testing';
 import { render, screen } from '@testing-library/vue';
 import { flushPromises } from '@vue/test-utils';
-import { en } from '<project-name>-i18n';
+import { en } from 'orval-test-i18n';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { nextTick } from 'vue';
 import { createI18n } from 'vue-i18n';
@@ -35,7 +35,7 @@ describe('app Test', () => {
   });
 
   it('should render the app', async () => {
-    expect(await screen.findByText('<project-name>')).toBeInTheDocument();
+    expect(await screen.findByText('orval-test')).toBeInTheDocument();
   });
 
   it('should display the login page', async () => {

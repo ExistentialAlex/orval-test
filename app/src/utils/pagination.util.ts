@@ -1,5 +1,5 @@
-import type { PaginationResponseSchema } from '<project-name>-schemas';
-import { appendQueryAndHash } from '<project-name>-utils';
+import type { PaginationResponseSchema } from 'orval-test-schemas';
+import { appendQueryAndHash } from 'orval-test-utils';
 
 export const updatePaginatedUrls = <T>(
   data: PaginationResponseSchema<T>,

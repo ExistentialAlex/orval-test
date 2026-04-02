@@ -1,4 +1,4 @@
-import type { ColumnSort } from '<project-name>-types';
+import type { ColumnSort } from 'orval-test-types';
 
 /**
  * Convert a column sort array into a string array.

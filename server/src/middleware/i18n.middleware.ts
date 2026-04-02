@@ -1,6 +1,6 @@
-import type { MessageSchema } from '<project-name>-i18n';
-import { en } from '<project-name>-i18n';
+import type { MessageSchema } from 'orval-test-i18n';
 import { defineIntlifyMiddleware, detectLocaleFromAcceptLanguageHeader } from '@intlify/hono';
+import { en } from 'orval-test-i18n';
 
 // define middleware with vue-i18n like options
 export const i18nMiddleware = defineIntlifyMiddleware<[MessageSchema], 'en' | 'en-GB'>({

@@ -1,5 +1,5 @@
 import eslintPluginZod from 'eslint-plugin-zod';
-import { baseConfig } from '<project-name>-eslint-config';
+import { baseConfig } from 'orval-test-eslint-config';
 
 export default baseConfig
   .append(eslintPluginZod.configs.recommended)

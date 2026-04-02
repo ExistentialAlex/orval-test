@@ -1,8 +1,8 @@
-import type { CreateUser, UpdateUser } from '<project-name>-schemas';
 import type { Context } from 'hono';
-import { doublet } from '<project-name>-utils';
+import type { CreateUser, UpdateUser } from 'orval-test-schemas';
 import { $fetchMock } from '@mocks/ofetch.mock';
 import { FetchError } from 'ofetch';
+import { doublet } from 'orval-test-utils';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { UserGetException, UserNotFoundException } from '@/exceptions';
 import { useUserService } from '@/services';
