@@ -46,6 +46,8 @@ export function createConfig(options: SharedConfigOptions = {}): FlatConfigCompo
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       'no-debugger': 'warn',
       'style/member-delimiter-style': ['error', { multiline: { delimiter: 'semi', requireLast: true }, singleline: { 'delimiter': 'semi', requireLast: false } }],
+      'ts/no-redeclare': 'off',
+      'ts/consistent-type-definitions': 'off'
     },
   });
 }
