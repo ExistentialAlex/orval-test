@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <platform-team-name>-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: <platform-team-name>-app
+  template:
+    metadata:
+      annotations:
+      labels:
+        app: <platform-team-name>-app
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: <platform-team-name>
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: <platform-team-name>-app
+      volumes:
+        - name: <platform-team-name>-config-volume
+          configMap:
+            name: <platform-team-name>-configmap
+      containers:
+        - name: <platform-team-name>-app
+          image: europe-west1-docker.pkg.dev/uk-cti-adtech-platform-test/<platform-team-name>/<platform-team-name>-app:${GIT_TAG}
+          imagePullPolicy: Always
+          ports:
+            - name: app
+              containerPort: 80
+          volumeMounts:
+            - name: <platform-team-name>-config-volume
+              mountPath: /usr/share/nginx/html/config.json
+              subPath: config.json
+          resources:
+            limits:
+              memory: 500Mi
+              cpu: 500m
+            requests:
+              memory: 100Mi
+              cpu: 100m

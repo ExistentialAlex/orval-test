@@ -1,0 +1,25 @@
+---
+platform: linux
+image_resource:
+  type: registry-image
+  source:
+    repository: europe-west1-docker.pkg.dev/uk-cti-adtech-platform-prod/adtech-platform-shared/concourse/git-resource
+    tag: alpine
+    username: _json_key
+    password: |
+      ((<platform-keyfile-name>.keyfile))
+inputs:
+  - name: ((repo_name))
+outputs:
+  - name: ((repo_name))
+run:
+  path: /bin/sh
+  args:
+    - -c
+    - |
+      chmod +x ci/scripts/extract_git_version.sh
+      GIT_COMMIT=$deploy_commit_sha ./ci/scripts/extract_git_version.sh
+  dir: ((repo_name))
+params:
+  deploy_commit_sha:
+  REPO_NAME: ((repo_name))

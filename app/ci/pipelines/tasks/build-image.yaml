@@ -1,0 +1,18 @@
+---
+platform: linux
+image_resource:
+  type: registry-image
+  source:
+    repository: concourse/oci-build-task
+inputs:
+  - name: ((repo_name))
+run:
+  path: build
+params:
+  CONTEXT: ((context))
+  TARGET: ((target))
+  REGISTRY_MIRRORS: mirror.gcr.io
+outputs:
+  - name: image
+caches:
+  - path: cache

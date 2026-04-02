@@ -1,0 +1,19 @@
+---
+apiVersion: launchpad.sky.uk/v1alpha1
+kind: Gateway
+metadata:
+  name: <platform-team-name>-app
+spec:
+  realms:
+    - name: ping
+      auth: none
+      allowInternet: false
+      allowOnPrem: true
+      routes:
+        - path: / # https://<platform-team-name>-app.internal.test.adtechplatform.sky.com/
+          methods:
+            - GET
+
+  services:
+    - name: <platform-team-name>-app
+      port: 80

@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: <platform-team-name>-server
+spec:
+  selector:
+    app: <platform-team-name>-server
+  ports:
+    - name: server
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

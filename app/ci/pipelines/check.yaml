@@ -1,0 +1,115 @@
+pr_failure_update: &pr_failure_update
+  put: mark-pr-check-as-failed
+  resource: adtech-adf-ui-pr
+  params:
+    path: adtech-adf-ui-pr
+    status: failure
+    context: ui-pr-check
+
+resource_types:
+  - name: pull-request
+    type: docker-image
+    source:
+      repository: europe-west1-docker.pkg.dev/uk-cti-adtech-platform-prod/adtech-platform-shared/teliaoss/github-pr-resource
+      tag: v0.23.0
+      username: _json_key
+      password: |
+        ((<platform-keyfile-name>.keyfile))
+
+resources:
+  - name: adtech-adf-ui-pr
+    icon: github
+    type: pull-request
+    webhook_token: ((adtech-adf-ui-webhook-token))
+    source:
+      base_branch: main
+      repository: sky-uk/<repository-name>
+      access_token: ((github_pat))
+      paths:
+        - app
+        - shared
+        - package.json
+        - Dockerfile
+        - docker-compose.yaml
+
+jobs:
+  - name: ui-pr-check
+    serial: true
+    plan:
+      - get: adtech-adf-ui-pr
+        trigger: true
+      - put: adtech-adf-ui-pr
+        params:
+          path: adtech-adf-ui-pr
+          status: pending
+          context: ui-pr-check
+      - load_var: pr_commit_sha
+        file: adtech-adf-ui-pr/.git/resource/head_sha
+      - in_parallel:
+          - task: unit-tests
+            privileged: true
+            file: adtech-adf-ui-pr/app/ci/pipelines/tasks/run-tests.yaml
+            vars:
+              repo_name: adtech-adf-ui-pr
+              gcp_sa_name: concourse-ui-bff@grp-cti-adtech-adf-test.iam.gserviceaccount.com
+              git_tag: ((.:pr_commit_sha))
+              target_env: test
+              make_target: unit-tests
+              gcp_sa_key_secret_path: ((<platform-keyfile-name>.keyfile))
+              github_pat_token_secret_name: ((github_pat))
+          - task: e2e-tests
+            privileged: true
+            file: adtech-adf-ui-pr/app/ci/pipelines/tasks/run-tests.yaml
+            vars:
+              repo_name: adtech-adf-ui-pr
+              gcp_sa_name: concourse-ui-bff@grp-cti-adtech-adf-test.iam.gserviceaccount.com
+              git_tag: ((.:pr_commit_sha))
+              target_env: test
+              make_target: e2e-tests
+              gcp_sa_key_secret_path: ((<platform-keyfile-name>.keyfile))
+              github_pat_token_secret_name: ((github_pat))
+          - task: lint
+            privileged: true
+            file: adtech-adf-ui-pr/app/ci/pipelines/tasks/run-tests.yaml
+            vars:
+              repo_name: adtech-adf-ui-pr
+              gcp_sa_name: concourse-ui-bff@grp-cti-adtech-adf-test.iam.gserviceaccount.com
+              git_tag: ((.:pr_commit_sha))
+              target_env: test
+              make_target: lint
+              gcp_sa_key_secret_path: ((<platform-keyfile-name>.keyfile))
+              github_pat_token_secret_name: ((github_pat))
+          - task: format
+            privileged: true
+            file: adtech-adf-ui-pr/app/ci/pipelines/tasks/run-tests.yaml
+            vars:
+              repo_name: adtech-adf-ui-pr
+              gcp_sa_name: concourse-ui-bff@grp-cti-adtech-adf-test.iam.gserviceaccount.com
+              git_tag: ((.:pr_commit_sha))
+              target_env: test
+              make_target: check-format
+              gcp_sa_key_secret_path: ((<platform-keyfile-name>.keyfile))
+              github_pat_token_secret_name: ((github_pat))
+      - task: docker-build
+        privileged: true
+        file: adtech-adf-ui-pr/app/ci/pipelines/tasks/build-image.yaml
+        vars:
+          repo_name: adtech-adf-ui-pr
+          context: adtech-adf-ui-pr
+          target: app
+      - task: docker-push
+        file: adtech-adf-ui-pr/app/ci/pipelines/tasks/push-image.yaml
+        vars:
+          repo_name: adtech-adf-ui-pr
+          google_json_credentials: ((<platform-keyfile-name>.keyfile))
+          target_image: europe-west1-docker.pkg.dev/uk-cti-adtech-platform-test/<platform-team-name>/<platform-team-name>-app
+    on_success:
+      put: mark-pr-check-as-successful
+      resource: adtech-adf-ui-pr
+      params:
+        path: adtech-adf-ui-pr
+        status: success
+        context: ui-pr-check
+    on_failure: *pr_failure_update
+    on_error: *pr_failure_update
+    on_abort: *pr_failure_update

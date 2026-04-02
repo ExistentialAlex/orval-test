@@ -1,0 +1,13 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <platform-team-name>-server
+spec:
+  template:
+    metadata:
+      annotations:
+    spec:
+      containers:
+        - name: adtech-adf-server
+          image: europe-west1-docker.pkg.dev/uk-cti-adtech-platform-stage/<platform-team-name>/<platform-team-name>-server:${GIT_TAG}

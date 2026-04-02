@@ -1,0 +1,24 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "moduleResolution": "bundler",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "types": ["vite-plugin-vue-layouts/client", "@intlify/unplugin-vue-i18n/messages"],
+    "allowArbitraryExtensions": true,
+    "strict": true
+  },
+  "include": [
+    "env.d.ts",
+    "src/**/*",
+    "src/**/*.vue",
+    "auto-imports.d.ts",
+    "components.d.ts",
+    "./typed-router.d.ts",
+    "./router.d.ts",
+    "i18n.d.ts"
+  ],
+  "exclude": ["src/**/__tests__/*"]
+}

@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "vue.volar",
+    "Vue.vscode-typescript-vue-plugin",
+    "pflannery.vscode-versionlens",
+    "aaron-bond.better-comments",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "vitest.explorer"
+  ]
+}

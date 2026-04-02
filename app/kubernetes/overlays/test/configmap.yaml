@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: <platform-team-name>-configmap
+data:
+  config.json: |
+    {
+      "VITE_API_BASE_URL": "https://<platform-team-name>-server.internal.test.adtechplatform.sky.com/api"
+    }

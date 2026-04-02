@@ -1,0 +1,9 @@
+packages:
+  - 'app'
+  - 'server'
+  - 'shared/*'
+syncInjectedDepsAfterScripts:
+  - build
+injectWorkspacePackages: true
+minimumReleaseAge: 20160
+savePrefix: ''

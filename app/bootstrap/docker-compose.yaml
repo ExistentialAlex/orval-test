@@ -1,0 +1,19 @@
+---
+version: '3'
+services:
+  concourse-setup:
+    build: .
+    container_name: concourse-setup
+    working_dir: /opt/app
+    environment:
+      - CLOUDSDK_CONFIG=/config/mygcloud
+      - GCP_SERVICE_ACCOUNT_NAME=concourse
+      - 'GCP_PROJECTS=${GCP_PROJECTS}'
+      - 'AWS_SECRET_PATH=${AWS_SECRET_PATH}'
+      - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+      - AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN
+    volumes:
+      - ../:/opt/app
+      - ${HOME}/.flyrc:/root/.flyrc
+      - ${CLOUDSDK_CONFIG:-~/.config/gcloud}:/config/mygcloud

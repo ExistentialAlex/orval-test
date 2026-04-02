@@ -1,0 +1,25 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.vitest.tsbuildinfo",
+    "lib": ["ES2022"],
+    "moduleResolution": "bundler",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@mocks/*": ["./tests/unit/mocks/*"],
+      "@helpers/*": ["./tests/unit/helpers/*"],
+      "@data/*": ["./tests/unit/data/*"]
+    },
+    "types": ["node", "jsdom", "vite-plugin-vue-layouts/client", "@testing-library/jest-dom"]
+  },
+  "include": [
+    "tests/unit/**/*",
+    "env.d.ts",
+    "tests/setup/**/*",
+    "tests/helpers/**/*",
+    "tests/mocks/**/*",
+    "./typed-router.d.ts",
+    "./router.d.ts"
+  ],
+  "exclude": []
+}

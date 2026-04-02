@@ -1,0 +1,87 @@
+---
+resource_types:
+  - name: github-webhook-resource
+    type: docker-image
+    source:
+      repository: europe-west1-docker.pkg.dev/uk-cti-adtech-platform-prod/adtech-platform-shared/jingkaihe/github-webhook-resource
+      tag: 1.4.2
+      username: _json_key
+      password: |
+        ((<platform-keyfile-name>.keyfile))
+
+resources:
+  - name: <project-name>-server
+    type: git
+    icon: github
+    webhook_token: ((<project-name>-server-webhook-token))
+    source:
+      uri: https://github.com/sky-uk/<repository-name>
+      paths:
+        - server
+      branch: main
+      fetch_tags: true
+      username: svc-adtech-cicd-bot
+      password: ((github_pat))
+  - name: <project-name>-server-webhook
+    type: github-webhook-resource
+    source:
+      github_api: https://api.github.com
+      github_token: ((github_pat))
+  - name: <project-name>-server-pr-webhook
+    type: github-webhook-resource
+    source:
+      github_api: https://api.github.com
+      github_token: ((github_pat))
+  - name: <project-name>-server-self-webhook
+    type: github-webhook-resource
+    source:
+      github_api: https://api.github.com
+      github_token: ((github_pat))
+
+jobs:
+  - name: <project-name>-server-set-self
+    plan:
+      - get: <project-name>-server
+        trigger: true
+      - set_pipeline: <project-name>-server-generator
+        file: <project-name>-server/server/ci/pipelines/pipeline_generator.yaml
+      - put: create-webhook
+        resource: <project-name>-server-self-webhook
+        params:
+          org: sky-uk
+          repo: <repository-name>
+          resource_name: <project-name>-server
+          webhook_token: ((<project-name>-server-webhook-token))
+          operation: create
+          events: [push]
+          pipeline: <project-name>-server-generator
+
+  - name: <project-name>-server-pipelines
+    plan:
+      - get: <project-name>-server
+        trigger: true
+        passed: [<project-name>-server-set-self]
+      - set_pipeline: <project-name>-server-pr
+        file: <project-name>-server/server/ci/pipelines/check.yaml
+      - set_pipeline: <project-name>-server-deploy
+        file: <project-name>-server/server/ci/pipelines/deploy.yaml
+      - put: create-webhook
+        resource: <project-name>-server-webhook
+        params:
+          org: sky-uk
+          repo: <repository-name>
+          resource_name: <project-name>-server
+          webhook_token: ((<project-name>-server-webhook-token))
+          operation: create
+          events: [push]
+          pipeline: <project-name>-server-deploy
+      - put: create-webhook-pr
+        resource: <project-name>-server-pr-webhook
+        params:
+          org: sky-uk
+          repo: <repository-name>
+          resource_name: <project-name>-server-pr
+          webhook_token: ((<project-name>-server-webhook-token))
+          operation: create
+          events: [pull_request]
+          pipeline: <project-name>-server-pr

@@ -1,0 +1,13 @@
+{
+  "name": "<project-name>-eslint-config",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.ts",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "peerDependencies": {
+    "@antfu/eslint-config": "^7.2.0",
+    "eslint": "^9.39.2"
+  }
+}

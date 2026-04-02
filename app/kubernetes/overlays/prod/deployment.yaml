@@ -1,0 +1,13 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <platform-team-name>-app
+spec:
+  template:
+    metadata:
+      annotations:
+    spec:
+      containers:
+        - name: <platform-team-name>-app
+          image: europe-west1-docker.pkg.dev/uk-cti-adtech-platform-prod/<platform-team-name>/<platform-team-name>-app:${GIT_TAG}

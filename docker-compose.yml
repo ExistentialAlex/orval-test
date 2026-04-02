@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: .
+      target: server
+    image: europe-west1-docker.pkg.dev/uk-cti-adtech-platform-test/<platform-team-name>/<platform-team-name>-server:$GIT_TAG
+    platform: linux/amd64
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+      - VITE_UI_URL=http://localhost
+    restart: unless-stopped
+
+  app:
+    build:
+      context: .
+      target: app
+    image: europe-west1-docker.pkg.dev/uk-cti-adtech-platform-test/<platform-team-name>/<platform-team-name>-app:$GIT_TAG
+    platform: linux/amd64
+    ports:
+      - '80:80'
+    depends_on:
+      - server
+    restart: unless-stopped
+    working_dir: /usr/src
+    volumes:
+      - .:/usr/src
+      - ./app/public/config.json:/usr/share/nginx/html/config.json:ro
+
+  ci:
+    build:
+      context: .
+      target: build
+    platform: linux/amd64
+  e2e:
+    build:
+      context: .
+      target: e2e
+    init: true
+    ipc: host
+    platform: linux/amd64
+
+  kubernetes:
+    image: europe-west1-docker.pkg.dev/uk-cti-adtech-platform-prod/adtech-platform-shared/python3-slim:v1.43.0
+    environment:
+      - 'PYTHONPATH=/mnt/src'
+      - 'KUBECONFIG=/home/python/.kube/config'
+      - 'CLOUDSDK_CONFIG=/home/python/config/mygcloud'
+      - 'USE_GKE_GCLOUD_AUTH_PLUGIN=True'
+      - 'NAMESPACE=${NAMESPACE}'
+      - 'K8_SERVICE_NAME=${K8_SERVICE_NAME}'
+      - 'PROJECT=${PROJECT}'
+      - 'TARGET_ENV=${TARGET_ENV}'
+      - 'GIT_TAG=${GIT_TAG}'
+      - 'SERVICE_ACCOUNT_NAME=${SERVICE_ACCOUNT_NAME}'
+      - 'GKE_CLUSTER_NAME=${GKE_CLUSTER_NAME}'
+      - 'REGION=${REGION}'
+    volumes:
+      - .:/mnt
+      - ~/.kube:/home/python/.kube
+      - ${CLOUDSDK_CONFIG:-~/.config/gcloud}:/home/python/config/mygcloud
+    working_dir: /mnt

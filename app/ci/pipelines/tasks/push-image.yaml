@@ -1,0 +1,24 @@
+---
+platform: linux
+image_resource:
+  type: registry-image
+  source:
+    repository: europe-west1-docker.pkg.dev/uk-cti-adtech-platform-prod/adtech-platform-shared/gcr.io/go-containerregistry/crane/debug
+    tag: c195f151efe3369874c72662cd69ad43ee485128
+    username: _json_key
+    password: |
+      ((<platform-keyfile-name>.keyfile))
+inputs:
+  - name: ((repo_name))
+  - name: image
+run:
+  path: /busybox/sh
+  args:
+    - -c
+    - |
+      chmod +x ((repo_name))/app/ci/scripts/push_image.sh
+      ((repo_name))/app/ci/scripts/push_image.sh
+params:
+  GOOGLE_JSON_CREDENTIALS: ((google_json_credentials))
+  DESTINATION_IMAGE: ((target_image))
+  REPO_NAME: ((repo_name))

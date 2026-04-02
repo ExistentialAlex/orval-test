@@ -1,0 +1,112 @@
+resource_types:
+  - name: slack-alert
+    type: registry-image
+    source:
+      repository: europe-west1-docker.pkg.dev/uk-cti-adtech-platform-prod/adtech-platform-shared/arbourd/concourse-slack-alert-resource
+      tag: v0.16.2
+      username: _json_key
+      password: |
+        ((<platform-keyfile-name>.keyfile))
+
+resources:
+  - name: adtech-adf-ui
+    type: git
+    icon: github
+    webhook_token: ((adtech-adf-ui-webhook-token))
+    source:
+      uri: https://github.com/sky-uk/<repository-name>.git
+      branch: main
+      fetch_tags: true
+      username: svc-adtech-cicd-bot
+      password: ((github_pat))
+      paths:
+        - app
+        - shared
+        - package.json
+        - Dockerfile
+        - docker-compose.yaml
+      ignore_paths:
+        - ./deployment/pipelines/pipeline_generator.yaml
+  - name: slack-ci-cd
+    type: slack-alert
+    source:
+      url: https://hooks.slack.com/services/((slack_webhook))
+
+build_log_retention: &build_log_retention
+  builds: 100
+  minimum_succeeded_builds: 3
+
+_slack_success_update: &slack_success_update
+  put: notify-slack-success
+  resource: slack-ci-cd
+  params:
+    alert_type: success
+
+_slack_failure_update: &slack_failure_update
+  put: notify-slack-failure
+  resource: slack-ci-cd
+  params:
+    alert_type: failed
+
+jobs:
+  - name: deploy-test
+    serial: true
+    build_log_retention: *build_log_retention
+    on_failure: *slack_failure_update
+    on_abort: *slack_failure_update
+    on_error: *slack_failure_update
+    on_success: *slack_success_update
+    plan:
+      - get: adtech-adf-ui
+        trigger: true
+      - task: tag
+        file: adtech-adf-ui/app/ci/pipelines/tasks/tag.yaml
+        vars:
+          repo_name: adtech-adf-ui
+          pat_token: ((github_pat))
+      - load_var: tag
+        file: adtech-adf-ui/tag.txt
+        reveal: true
+      - put: adtech-adf-ui
+        params:
+          repository: adtech-adf-ui
+      - task: set-build-version
+        file: adtech-adf-ui/app/ci/pipelines/tasks/set-build-version.yaml
+        vars:
+          repo_name: adtech-adf-ui
+          version: ((.:tag))
+      - task: docker-build
+        privileged: true
+        file: adtech-adf-ui/app/ci/pipelines/tasks/build-image.yaml
+        vars:
+          repo_name: adtech-adf-ui
+          context: adtech-adf-ui
+          target: app
+      - task: docker-push
+        file: adtech-adf-ui/app/ci/pipelines/tasks/push-image.yaml
+        vars:
+          repo_name: adtech-adf-ui
+          google_json_credentials: ((<platform-keyfile-name>.keyfile))
+          target_image: europe-west1-docker.pkg.dev/uk-cti-adtech-platform-test/<platform-team-name>/<platform-team-name>-app
+      - task: deploy-to-test
+        privileged: true
+        file: adtech-adf-ui/app/ci/pipelines/tasks/run-make.yaml
+        vars:
+          repo_name: adtech-adf-ui
+          gcp_sa_name: concourse-ui-bff@grp-cti-adtech-adf-test.iam.gserviceaccount.com
+          git_tag: ((.:tag))
+          target_env: test
+          make_target: deploy-app
+          gcp_sa_key_secret_path: ((<platform-keyfile-name>.keyfile))
+          github_pat_token_secret_name: ((github_pat))
+      - task: stubbed-promote-to-stage
+        privileged: true
+        file: adtech-adf-ui/app/ci/pipelines/tasks/run-tests.yaml
+        vars:
+          repo_name: adtech-adf-ui
+          gcp_sa_name: concourse-ui-bff@grp-cti-adtech-adf-test.iam.gserviceaccount.com
+          git_tag: ((.:tag))
+          target_env: test
+          make_target: mock-command
+          gcp_sa_key_secret_path: ((<platform-keyfile-name>.keyfile))
+          github_pat_token_secret_name: ((github_pat))

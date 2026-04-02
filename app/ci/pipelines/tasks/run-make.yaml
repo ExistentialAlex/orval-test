@@ -1,0 +1,46 @@
+---
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: europe-west1-docker.pkg.dev/uk-cti-adtech-platform-prod/adtech-platform-shared/concourse-dcind
+    tag: v1.0.0
+    username: _json_key
+    password: |
+      ((<platform-keyfile-name>.keyfile))
+inputs:
+  - name: ((repo_name))
+run:
+  path: entrypoint.sh
+  args:
+    - bash
+    - -ce
+    - |
+      # when pushed from windows for some reason files don't have exec permissions, apply before executing
+      chmod -R +x ./app/ci/scripts
+
+      # install gcloud cli
+      apk --no-cache add jq -q
+      echo $GOOGLE_JSON_CREDENTIALS | jq -rc . > credentials.json
+      SERVICE_ACCOUNT_KEY_PATH=credentials.json \
+      SERVICE_ACCOUNT_NAME=$SERVICE_ACCOUNT_NAME \
+      TARGET_ENV=uk-cti-adtech-platform-$TARGET_ENV \
+      ./app/ci/scripts/init_gcloud.sh
+
+      # set correct permissions for mounted dir before executing next gcp commands
+      ./app/ci/scripts/enable_dir_mount.sh ~/.config/gcloud ~/.kube $(pwd)
+
+      # authenticate to k8 cluster
+      GKE_CLUSTER_NAME=adtech-platform-gke-$TARGET_ENV \
+      PROJECT=uk-cti-adtech-platform-$TARGET_ENV \
+      REGION=europe-west1 \
+      docker-compose -f ./docker-compose.yaml run --rm kubernetes -c \
+      'gcloud container clusters get-credentials $GKE_CLUSTER_NAME --region $REGION --project $PROJECT --dns-endpoint'
+
+      make --no-print-directory ((make_target))
+  dir: ((repo_name))
+params:
+  TARGET_ENV: ((target_env))
+  GIT_TAG: ((git_tag))
+  GOOGLE_JSON_CREDENTIALS: ((gcp_sa_key_secret_path))
+  SERVICE_ACCOUNT_NAME: ((gcp_sa_name))

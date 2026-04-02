@@ -1,0 +1,246 @@
+{
+  "app": {
+    "title": "<project-name>",
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "system": "System",
+      "users": "Users",
+      "signOut": "Sign Out",
+      "appearance": {
+        "title": "Theme",
+        "system": "System",
+        "light": "Light",
+        "dark": "Dark"
+      }
+    },
+    "pages": {
+      "dashboard": {
+        "title": "Dashboard",
+        "welcome": {
+          "title": "Welcome",
+          "description": "This is the base page for {title}. This is the starting point for your application. Please read over the READMEs in the repository for how to add, remove and update pages."
+        },
+        "cards": {
+          "users": {
+            "title": "Users",
+            "description": "View and manage users within the system."
+          }
+        }
+      },
+      "users": {
+        "list": {
+          "create": "Create User",
+          "title": "Users",
+          "addUserButton": "Add User",
+          "columns": {
+            "name": "Name",
+            "jobTitle": "Job Title"
+          },
+          "actions": {
+            "title": "Actions",
+            "edit": "Edit",
+            "delete": "Delete"
+          },
+          "modals": {
+            "delete": {
+              "title": "Delete User",
+              "description": "Are you sure you want to delete this user?"
+            }
+          }
+        },
+        "create": {
+          "title": "Create User",
+          "form": {
+            "title": "User Details",
+            "description": "Add details about your user below",
+            "submit": "Create"
+          },
+          "toasts": {
+            "onSuccess": {
+              "title": "User Created Successfully",
+              "description": "User '{name}' has been created."
+            },
+            "onError": {
+              "title": "Error Creating User"
+            }
+          },
+          "modals": {
+            "unsavedChanges": {
+              "title": "Save as draft or discard?",
+              "description": "You have unsaved changes. Would you like to save your work as a draft before closing or discard your changes?",
+              "discard": "Discard Changes",
+              "continue": "Save as Draft"
+            }
+          }
+        },
+        "edit": {
+          "title": "Edit User",
+          "form": {
+            "title": "User Details",
+            "description": "Update details about your user below",
+            "submit": "Save"
+          },
+          "toasts": {
+            "onFetchError": {
+              "title": "Error Fetching User"
+            }
+          },
+          "modals": {
+            "unsavedChanges": {
+              "title": "Save changes or discard?",
+              "description": "You have unsaved changes. Would you like to save your work before closing or discard your changes?",
+              "discard": "Discard",
+              "continue": "Save Changes"
+            }
+          }
+        }
+      },
+      "login": {
+        "title": "Login",
+        "header": "Welcome",
+        "form": {
+          "email": {
+            "label": "Email",
+            "placeholder": "Enter your email..."
+          },
+          "organisation": {
+            "label": "Organisation",
+            "placeholder": "Select an organisation..."
+          },
+          "submit": "Login"
+        },
+        "toasts": {
+          "login": {
+            "error": "Login Error Occurred"
+          }
+        }
+      },
+      "notFound": {
+        "title": "Page not found",
+        "description": "Sorry, we couldn't find the page you're looking for.",
+        "actions": {
+          "goBack": "Go back home",
+          "contactSupport": "Contact Support"
+        }
+      }
+    },
+    "composables": {
+      "useFetch": {
+        "toasts": {
+          "unauthorised": {
+            "title": "Session Timeout",
+            "description": "Your session has timed out, please log in."
+          }
+        }
+      },
+      "useDiscardChanges": {
+        "modal": {
+          "discard": "Discard",
+          "continue": "Continue"
+        }
+      },
+      "useConfirmationModal": {
+        "modal": {
+          "confirm": "Confirm",
+          "cancel": "Cancel"
+        }
+      },
+      "users": {
+        "useUpdateUser": {
+          "toasts": {
+            "onSuccess": {
+              "title": "User Saved Successfully",
+              "description": "User '{name}' has been updated."
+            },
+            "onError": {
+              "title": "Error Saving User"
+            }
+          }
+        },
+        "useDeleteUser": {
+          "toasts": {
+            "onSuccess": {
+              "title": "User Deleted",
+              "description": "User has been deleted."
+            },
+            "onError": {
+              "title": "Error Deleting User"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "paginatedTable": {
+        "next": "Next",
+        "previous": "Previous",
+        "total": "Showing {min} - {max} of {total}"
+      },
+      "users": {
+        "user-details-form": {
+          "name": {
+            "label": "Name",
+            "description": "User Name"
+          },
+          "job-title": {
+            "label": "Job Title",
+            "description": "Description of the user's role"
+          }
+        }
+      }
+    }
+  },
+  "server": {
+    "exceptions": {
+      "default": {
+        "400": "DEFAULT EXCEPTION HANDLER: Bad Request",
+        "401": "DEFAULT EXCEPTION HANDLER: Unauthorised",
+        "403": "DEFAULT EXCEPTION HANDLER: Forbidden",
+        "404": "DEFAULT EXCEPTION HANDLER: Not found",
+        "409": "DEFAULT EXCEPTION HANDLER: Conflict",
+        "422": "DEFAULT EXCEPTION HANDLER: Unprocessable"
+      },
+      "users": {
+        "list": "An error occurred getting the users, please try again or contact support.",
+        "get": "An error occurred while getting user with ID '{id}', please try again or contact support.",
+        "user-not-found": "User with ID '{id}' not found.",
+        "user-name-taken": "Attribute with name '{name}' already exists.",
+        "create": "An error occurred while creating the user, please try again or contact support.",
+        "update": "An error occurred while updating the user with ID '{id}', please try again or contact support.",
+        "delete": "An error occurred while deleting the user with ID '{id}', please try again or contact support."
+      }
+    },
+    "session": {
+      "delete": "Session cleared"
+    },
+    "ping": "Congratulations! Your API is live! 🚀",
+    "auth": {
+      "login": {
+        "responses": {
+          "201": "Login successful",
+          "401": "Please specify your email address and organisation"
+        }
+      }
+    }
+  },
+  "enums": {},
+  "schemas": {
+    "AuthSchema": {
+      "email": {
+        "required": "Email is required",
+        "valid": "Enter a valid email address"
+      },
+      "organisation": "Organisation is required"
+    },
+    "UserSchema": {
+      "name": {
+        "min": "Name is required",
+        "max": "Name must be less than 100 characters"
+      },
+      "job-title": {
+        "min": "Job Title is required",
+        "max": "Job Title must be less than 100 characters"
+      }
+    }
+  }
+}

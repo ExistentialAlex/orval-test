@@ -1,0 +1,16 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <platform-team-name>-server
+spec:
+  template:
+    metadata:
+      annotations:
+    spec:
+      containers:
+        - name: <platform-team-name>-server
+          image: europe-west1-docker.pkg.dev/uk-cti-adtech-platform-test/<platform-team-name>/<platform-team-name>-server:${GIT_TAG}
+          env:
+            - name: VITE_UI_URL
+              value: https://<platform-team-name>-app.internal.test.adtechplatform.sky.com

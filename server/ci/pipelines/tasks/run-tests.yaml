@@ -1,0 +1,23 @@
+---
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: europe-west1-docker.pkg.dev/uk-cti-adtech-platform-prod/adtech-platform-shared/concourse-dcind
+    tag: v1.0.0
+    username: _json_key
+    password: |
+      ((<platform-keyfile-name>.keyfile))
+inputs:
+  - name: ((repo_name))
+run:
+  path: entrypoint.sh
+  args:
+    - bash
+    - -ce
+    - |
+      make --no-print-directory ((make_target))
+  dir: ((repo_name))
+params:
+  TARGET_ENV: ((target_env))
+  GIT_TAG: ((git_tag))

@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "lib": ["ES2022"],
+    "moduleResolution": "bundler",
+    "paths": {
+      "@/*": ["./tests/e2e/*"]
+    },
+    "types": ["node", "jsdom"]
+  },
+  "include": ["tests/e2e/**/*"],
+  "exclude": []
+}
