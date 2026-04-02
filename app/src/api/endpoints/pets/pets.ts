@@ -4,28 +4,6 @@
  * Swagger Petstore
  * OpenAPI spec version: 1.0.0
  */
-import {
-  useMutation,
-  useQuery
-} from '@tanstack/vue-query';
-import type {
-  MutationFunction,
-  QueryFunction,
-  QueryKey,
-  UseMutationOptions,
-  UseMutationReturnType,
-  UseQueryOptions,
-  UseQueryReturnType
-} from '@tanstack/vue-query';
-
-import {
-  computed,
-  unref
-} from 'vue';
-import type {
-  MaybeRef
-} from 'vue';
-
 import type {
   CreatePetsBody,
   Error,
@@ -37,15 +15,12 @@ import type {
 
 
 
-
-
 export type HTTPStatusCode1xx = 100 | 101 | 102 | 103;
 export type HTTPStatusCode2xx = 200 | 201 | 202 | 203 | 204 | 205 | 206 | 207;
 export type HTTPStatusCode3xx = 300 | 301 | 302 | 303 | 304 | 305 | 307 | 308;
 export type HTTPStatusCode4xx = 400 | 401 | 402 | 403 | 404 | 405 | 406 | 407 | 408 | 409 | 410 | 411 | 412 | 413 | 414 | 415 | 416 | 417 | 418 | 419 | 420 | 421 | 422 | 423 | 424 | 426 | 428 | 429 | 431 | 451;
 export type HTTPStatusCode5xx = 500 | 501 | 502 | 503 | 504 | 505 | 507 | 511;
 export type HTTPStatusCodes = HTTPStatusCode1xx | HTTPStatusCode2xx | HTTPStatusCode3xx | HTTPStatusCode4xx | HTTPStatusCode5xx;
-
 
 /**
  * @summary Search pets by query params
@@ -101,59 +76,6 @@ export const searchPets = async (params: SearchPetsParams, options?: RequestInit
   return { data, status: res.status, headers: res.headers } as searchPetsResponse
 }
   
-
-
-
-
-export const getSearchPetsQueryKey = (params?: MaybeRef<SearchPetsParams>,) => {
-    return [
-    'search', ...(params ? [params] : [])
-    ] as const;
-    }
-
-    
-export const getSearchPetsQueryOptions = <TData = Awaited<ReturnType<typeof searchPets>>, TError = Error>(params: MaybeRef<SearchPetsParams>, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof searchPets>>, TError, TData>, fetch?: RequestInit}
-) => {
-
-const {query: queryOptions, fetch: fetchOptions} = options ?? {};
-
-  const queryKey =  getSearchPetsQueryKey(params);
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof searchPets>>> = ({ signal }) => searchPets(unref(params), { signal, ...fetchOptions });
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof searchPets>>, TError, TData> 
-}
-
-export type SearchPetsQueryResult = NonNullable<Awaited<ReturnType<typeof searchPets>>>
-export type SearchPetsQueryError = Error
-
-
-/**
- * @summary Search pets by query params
- */
-
-export function useSearchPets<TData = Awaited<ReturnType<typeof searchPets>>, TError = Error>(
- params: MaybeRef<SearchPetsParams>, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof searchPets>>, TError, TData>, fetch?: RequestInit}
-  
- ): UseQueryReturnType<TData, TError> & { queryKey: QueryKey } {
-
-  const queryOptions = getSearchPetsQueryOptions(params,options)
-
-  const query = useQuery(queryOptions) as UseQueryReturnType<TData, TError> & { queryKey: QueryKey };
-
-  query.queryKey = unref(queryOptions).queryKey as QueryKey;
-
-  return query;
-}
-
-
-
 
 /**
  * @summary List all pets
@@ -215,59 +137,6 @@ export const listPets = async (params?: ListPetsParams, options?: RequestInit): 
 }
   
 
-
-
-
-export const getListPetsQueryKey = (params?: MaybeRef<ListPetsParams>,) => {
-    return [
-    'pets', ...(params ? [params] : [])
-    ] as const;
-    }
-
-    
-export const getListPetsQueryOptions = <TData = Awaited<ReturnType<typeof listPets>>, TError = Error>(params?: MaybeRef<ListPetsParams>, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listPets>>, TError, TData>, fetch?: RequestInit}
-) => {
-
-const {query: queryOptions, fetch: fetchOptions} = options ?? {};
-
-  const queryKey =  getListPetsQueryKey(params);
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof listPets>>> = ({ signal }) => listPets(unref(params), { signal, ...fetchOptions });
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listPets>>, TError, TData> 
-}
-
-export type ListPetsQueryResult = NonNullable<Awaited<ReturnType<typeof listPets>>>
-export type ListPetsQueryError = Error
-
-
-/**
- * @summary List all pets
- */
-
-export function useListPets<TData = Awaited<ReturnType<typeof listPets>>, TError = Error>(
- params?: MaybeRef<ListPetsParams>, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listPets>>, TError, TData>, fetch?: RequestInit}
-  
- ): UseQueryReturnType<TData, TError> & { queryKey: QueryKey } {
-
-  const queryOptions = getListPetsQueryOptions(params,options)
-
-  const query = useQuery(queryOptions) as UseQueryReturnType<TData, TError> & { queryKey: QueryKey };
-
-  query.queryKey = unref(queryOptions).queryKey as QueryKey;
-
-  return query;
-}
-
-
-
-
 /**
  * @summary Create a pet
  */
@@ -317,53 +186,7 @@ export const createPets = async (createPetsBody: CreatePetsBody, options?: Reque
 }
   
 
-
-
-export const getCreatePetsMutationOptions = <TError = Error,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createPets>>, TError,{data: CreatePetsBody}, TContext>, fetch?: RequestInit}
-): UseMutationOptions<Awaited<ReturnType<typeof createPets>>, TError,{data: CreatePetsBody}, TContext> => {
-
-const mutationKey = ['createPets'];
-const {mutation: mutationOptions, fetch: fetchOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, fetch: undefined};
-
-      
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createPets>>, {data: CreatePetsBody}> = (props) => {
-          const {data} = props ?? {};
-
-          return  createPets(data,fetchOptions)
-        }
-
-
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type CreatePetsMutationResult = NonNullable<Awaited<ReturnType<typeof createPets>>>
-    export type CreatePetsMutationBody = CreatePetsBody
-    export type CreatePetsMutationError = Error
-
-    /**
- * @summary Create a pet
- */
-export const useCreatePets = <TError = Error,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createPets>>, TError,{data: CreatePetsBody}, TContext>, fetch?: RequestInit}
- ): UseMutationReturnType<
-        Awaited<ReturnType<typeof createPets>>,
-        TError,
-        {data: CreatePetsBody},
-        TContext
-      > => {
-      return useMutation(getCreatePetsMutationOptions(options));
-    }
-    /**
+/**
  * @summary Info for a specific pet
  */
 export type showPetByIdResponse200TextPlain = {
@@ -421,59 +244,6 @@ export const showPetById = async (petId: string, options?: RequestInit): Promise
 }
   
 
-
-
-
-export const getShowPetByIdQueryKey = (petId: MaybeRef<string>,) => {
-    return [
-    'pets',petId
-    ] as const;
-    }
-
-    
-export const getShowPetByIdQueryOptions = <TData = Awaited<ReturnType<typeof showPetById>>, TError = Error>(petId: MaybeRef<string>, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof showPetById>>, TError, TData>, fetch?: RequestInit}
-) => {
-
-const {query: queryOptions, fetch: fetchOptions} = options ?? {};
-
-  const queryKey =  getShowPetByIdQueryKey(petId);
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof showPetById>>> = ({ signal }) => showPetById(unref(petId), { signal, ...fetchOptions });
-
-      
-
-      
-
-   return  { queryKey, queryFn, enabled: computed(() => !!(unref(petId))), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof showPetById>>, TError, TData> 
-}
-
-export type ShowPetByIdQueryResult = NonNullable<Awaited<ReturnType<typeof showPetById>>>
-export type ShowPetByIdQueryError = Error
-
-
-/**
- * @summary Info for a specific pet
- */
-
-export function useShowPetById<TData = Awaited<ReturnType<typeof showPetById>>, TError = Error>(
- petId: MaybeRef<string>, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof showPetById>>, TError, TData>, fetch?: RequestInit}
-  
- ): UseQueryReturnType<TData, TError> & { queryKey: QueryKey } {
-
-  const queryOptions = getShowPetByIdQueryOptions(petId,options)
-
-  const query = useQuery(queryOptions) as UseQueryReturnType<TData, TError> & { queryKey: QueryKey };
-
-  query.queryKey = unref(queryOptions).queryKey as QueryKey;
-
-  return query;
-}
-
-
-
-
 /**
  * @summary Info for a specific pet as plain text
  */
@@ -521,59 +291,6 @@ export const showPetText = async (petId: string, options?: RequestInit): Promise
   return { data, status: res.status, headers: res.headers } as showPetTextResponse
 }
   
-
-
-
-
-export const getShowPetTextQueryKey = (petId: MaybeRef<string>,) => {
-    return [
-    'pets',petId,'text'
-    ] as const;
-    }
-
-    
-export const getShowPetTextQueryOptions = <TData = Awaited<ReturnType<typeof showPetText>>, TError = Error>(petId: MaybeRef<string>, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof showPetText>>, TError, TData>, fetch?: RequestInit}
-) => {
-
-const {query: queryOptions, fetch: fetchOptions} = options ?? {};
-
-  const queryKey =  getShowPetTextQueryKey(petId);
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof showPetText>>> = ({ signal }) => showPetText(unref(petId), { signal, ...fetchOptions });
-
-      
-
-      
-
-   return  { queryKey, queryFn, enabled: computed(() => !!(unref(petId))), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof showPetText>>, TError, TData> 
-}
-
-export type ShowPetTextQueryResult = NonNullable<Awaited<ReturnType<typeof showPetText>>>
-export type ShowPetTextQueryError = Error
-
-
-/**
- * @summary Info for a specific pet as plain text
- */
-
-export function useShowPetText<TData = Awaited<ReturnType<typeof showPetText>>, TError = Error>(
- petId: MaybeRef<string>, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof showPetText>>, TError, TData>, fetch?: RequestInit}
-  
- ): UseQueryReturnType<TData, TError> & { queryKey: QueryKey } {
-
-  const queryOptions = getShowPetTextQueryOptions(petId,options)
-
-  const query = useQuery(queryOptions) as UseQueryReturnType<TData, TError> & { queryKey: QueryKey };
-
-  query.queryKey = unref(queryOptions).queryKey as QueryKey;
-
-  return query;
-}
-
-
-
 
 /**
  * Upload image of the pet.
@@ -636,53 +353,7 @@ export const uploadFile = async (petId: number,
 }
   
 
-
-
-export const getUploadFileMutationOptions = <TError = void | Error,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof uploadFile>>, TError,{petId: number;data: Blob}, TContext>, fetch?: RequestInit}
-): UseMutationOptions<Awaited<ReturnType<typeof uploadFile>>, TError,{petId: number;data: Blob}, TContext> => {
-
-const mutationKey = ['uploadFile'];
-const {mutation: mutationOptions, fetch: fetchOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, fetch: undefined};
-
-      
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof uploadFile>>, {petId: number;data: Blob}> = (props) => {
-          const {petId,data} = props ?? {};
-
-          return  uploadFile(petId,data,fetchOptions)
-        }
-
-
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type UploadFileMutationResult = NonNullable<Awaited<ReturnType<typeof uploadFile>>>
-    export type UploadFileMutationBody = Blob
-    export type UploadFileMutationError = void | Error
-
-    /**
- * @summary Uploads an image.
- */
-export const useUploadFile = <TError = void | Error,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof uploadFile>>, TError,{petId: number;data: Blob}, TContext>, fetch?: RequestInit}
- ): UseMutationReturnType<
-        Awaited<ReturnType<typeof uploadFile>>,
-        TError,
-        {petId: number;data: Blob},
-        TContext
-      > => {
-      return useMutation(getUploadFileMutationOptions(options));
-    }
-    /**
+/**
  * Download image of the pet.
  * @summary Download an image.
  */
@@ -740,57 +411,4 @@ export const downloadFile = async (petId: number, options?: RequestInit): Promis
   return { data, status: res.status, headers: res.headers } as downloadFileResponse
 }
   
-
-
-
-
-export const getDownloadFileQueryKey = (petId: MaybeRef<number>,) => {
-    return [
-    'pet',petId,'downloadImage'
-    ] as const;
-    }
-
-    
-export const getDownloadFileQueryOptions = <TData = Awaited<ReturnType<typeof downloadFile>>, TError = void | Error>(petId: MaybeRef<number>, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof downloadFile>>, TError, TData>, fetch?: RequestInit}
-) => {
-
-const {query: queryOptions, fetch: fetchOptions} = options ?? {};
-
-  const queryKey =  getDownloadFileQueryKey(petId);
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof downloadFile>>> = ({ signal }) => downloadFile(unref(petId), { signal, ...fetchOptions });
-
-      
-
-      
-
-   return  { queryKey, queryFn, enabled: computed(() => !!(unref(petId))), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof downloadFile>>, TError, TData> 
-}
-
-export type DownloadFileQueryResult = NonNullable<Awaited<ReturnType<typeof downloadFile>>>
-export type DownloadFileQueryError = void | Error
-
-
-/**
- * @summary Download an image.
- */
-
-export function useDownloadFile<TData = Awaited<ReturnType<typeof downloadFile>>, TError = void | Error>(
- petId: MaybeRef<number>, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof downloadFile>>, TError, TData>, fetch?: RequestInit}
-  
- ): UseQueryReturnType<TData, TError> & { queryKey: QueryKey } {
-
-  const queryOptions = getDownloadFileQueryOptions(petId,options)
-
-  const query = useQuery(queryOptions) as UseQueryReturnType<TData, TError> & { queryKey: QueryKey };
-
-  query.queryKey = unref(queryOptions).queryKey as QueryKey;
-
-  return query;
-}
-
-
-
 

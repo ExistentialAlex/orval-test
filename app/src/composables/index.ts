@@ -1,3 +1,4 @@
+export * from './generated';
 export * from './useActionModal';
 export * from './useConfirmationModal';
 export * from './useDiscardChanges';

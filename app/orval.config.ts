@@ -2,11 +2,14 @@ import { defineConfig } from 'orval';
 
 export default defineConfig({
   petstore: {
+    hooks: {
+      afterAllFilesWrite: ['pnpm exec jiti ./orval/generate-colada-wrappers.ts'],
+    },
     output: {
       mode: 'tags-split',
       target: 'src/api/endpoints',
       schemas: 'src/api/models',
-      client: 'vue-query',
+      client: 'fetch',
       mock: true,
     },
     input: {
