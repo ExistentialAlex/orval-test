@@ -1,0 +1,487 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "orval-test API",
+    "description": "API Documentation for the orval-test.",
+    "version": "0.0.0"
+  },
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "operationId": "postAuthLogin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "organisation": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "email",
+                  "organisation"
+                ]
+              }
+            }
+          }
+        },
+        "description": "Login to the BFF.",
+        "tags": [
+          "authentication"
+        ],
+        "responses": {
+          "200": {
+            "description": "Login Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Login not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/session": {
+      "get": {
+        "operationId": "getSession",
+        "description": "Get public session data.",
+        "tags": [
+          "session"
+        ],
+        "responses": {
+          "200": {
+            "description": "Public Session Data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "company": {
+                      "type": "string"
+                    },
+                    "avatar": {
+                      "type": "object",
+                      "properties": {
+                        "src": {
+                          "type": "string"
+                        },
+                        "alt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "src",
+                        "alt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "email",
+                    "name",
+                    "company"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteSession",
+        "description": "Delete the current user session.",
+        "tags": [
+          "session"
+        ],
+        "responses": {
+          "200": {
+            "description": "Session Deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "operationId": "getUsers",
+        "description": "Get list of users",
+        "tags": [
+          "users"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "number"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "jobTitle": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "jobTitle"
+                        ]
+                      }
+                    },
+                    "count": {
+                      "type": "number"
+                    },
+                    "page": {
+                      "type": "number"
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "previous": {
+                      "type": "string",
+                      "format": "uri"
+                    }
+                  },
+                  "required": [
+                    "results",
+                    "count",
+                    "page"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "schema": {
+              "type": "integer",
+              "minimum": 5,
+              "maximum": 100
+            }
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "post": {
+        "operationId": "postUsers",
+        "description": "Create a new user",
+        "tags": [
+          "users"
+        ],
+        "responses": {
+          "201": {
+            "description": "User created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "jobTitle": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "jobTitle"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "jobTitle": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "jobTitle"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "operationId": "getUsers:id",
+        "description": "Get user by ID",
+        "tags": [
+          "users"
+        ],
+        "responses": {
+          "200": {
+            "description": "User Details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "jobTitle": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "jobTitle"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "number"
+            },
+            "required": true
+          }
+        ]
+      },
+      "patch": {
+        "operationId": "patchUsers:id",
+        "description": "Update user by ID",
+        "tags": [
+          "users"
+        ],
+        "responses": {
+          "200": {
+            "description": "User updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "jobTitle": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "jobTitle"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "number"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "jobTitle": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "jobTitle"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteUsers:id",
+        "description": "Delete user by ID",
+        "tags": [
+          "users"
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "number"
+            },
+            "required": true
+          }
+        ]
+      }
+    }
+  },
+  "components": {}
+}

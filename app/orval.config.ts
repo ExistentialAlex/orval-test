@@ -1,7 +1,7 @@
 import { defineConfig } from 'orval';
 
 export default defineConfig({
-  petstore: {
+  server: {
     hooks: {
       afterAllFilesWrite: ['pnpm exec jiti ./orval/generate-colada-wrappers.ts'],
     },
@@ -13,12 +13,12 @@ export default defineConfig({
       mock: true,
     },
     input: {
-      target: './petstore.yaml',
+      target: '../server/openapi.json',
     },
   },
-  petstoreZod: {
+  serverZod: {
     input: {
-      target: './petstore.yaml',
+      target: '../server/openapi.json',
     },
     output: {
       mode: 'tags-split',

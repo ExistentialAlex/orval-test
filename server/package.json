@@ -9,7 +9,8 @@
     "start": "node dist/index.js",
     "test:unit": "vitest run --coverage",
     "lint": "eslint",
-    "lint:fix": "eslint --fix"
+    "lint:fix": "eslint --fix",
+    "openapi:generate": "tsx --tsconfig ./tsconfig.app.json scripts/openapi.ts"
   },
   "dependencies": {
     "@hono/node-server": "1.19.2",
