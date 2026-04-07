@@ -16,6 +16,7 @@ import type {
   PostUsersBody
 } from '../../models';
 
+import { customInstance } from '../../mutator/custom-instance';
 
 /**
  * Get list of users
@@ -44,25 +45,19 @@ export const getGetUsersUrl = (params?: GetUsersParams,) => {
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `/users?${stringifiedParams}` : `/users`
+  return stringifiedParams.length > 0 ? `http://localhost:3000/users?${stringifiedParams}` : `http://localhost:3000/users`
 }
 
 export const getUsers = async (params?: GetUsersParams, options?: RequestInit): Promise<getUsersResponse> => {
   
-  const res = await fetch(getGetUsersUrl(params),
+  return customInstance<getUsersResponse>(getGetUsersUrl(params),
   {      
     ...options,
     method: 'GET'
     
     
   }
-)
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-  
-  const data: getUsersResponse['data'] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as getUsersResponse
-}
+);}
   
 
 /**
@@ -92,12 +87,12 @@ export const getPostUsersUrl = () => {
 
   
 
-  return `/users`
+  return `http://localhost:3000/users`
 }
 
 export const postUsers = async (postUsersBody: PostUsersBody, options?: RequestInit): Promise<postUsersResponse> => {
   
-  const res = await fetch(getPostUsersUrl(),
+  return customInstance<postUsersResponse>(getPostUsersUrl(),
   {      
     ...options,
     method: 'POST',
@@ -105,13 +100,7 @@ export const postUsers = async (postUsersBody: PostUsersBody, options?: RequestI
     body: JSON.stringify(
       postUsersBody,)
   }
-)
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-  
-  const data: postUsersResponse['data'] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as postUsersResponse
-}
+);}
   
 
 /**
@@ -141,25 +130,19 @@ export const getGetUsersIdUrl = (id: number,) => {
 
   
 
-  return `/users/${id}`
+  return `http://localhost:3000/users/${id}`
 }
 
 export const getUsersId = async (id: number, options?: RequestInit): Promise<getUsersIdResponse> => {
   
-  const res = await fetch(getGetUsersIdUrl(id),
+  return customInstance<getUsersIdResponse>(getGetUsersIdUrl(id),
   {      
     ...options,
     method: 'GET'
     
     
   }
-)
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-  
-  const data: getUsersIdResponse['data'] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as getUsersIdResponse
-}
+);}
   
 
 /**
@@ -194,13 +177,13 @@ export const getPatchUsersIdUrl = (id: number,) => {
 
   
 
-  return `/users/${id}`
+  return `http://localhost:3000/users/${id}`
 }
 
 export const patchUsersId = async (id: number,
     patchUsersIdBody: PatchUsersIdBody, options?: RequestInit): Promise<patchUsersIdResponse> => {
   
-  const res = await fetch(getPatchUsersIdUrl(id),
+  return customInstance<patchUsersIdResponse>(getPatchUsersIdUrl(id),
   {      
     ...options,
     method: 'PATCH',
@@ -208,13 +191,7 @@ export const patchUsersId = async (id: number,
     body: JSON.stringify(
       patchUsersIdBody,)
   }
-)
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-  
-  const data: patchUsersIdResponse['data'] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as patchUsersIdResponse
-}
+);}
   
 
 /**
@@ -244,24 +221,18 @@ export const getDeleteUsersIdUrl = (id: number,) => {
 
   
 
-  return `/users/${id}`
+  return `http://localhost:3000/users/${id}`
 }
 
 export const deleteUsersId = async (id: number, options?: RequestInit): Promise<deleteUsersIdResponse> => {
   
-  const res = await fetch(getDeleteUsersIdUrl(id),
+  return customInstance<deleteUsersIdResponse>(getDeleteUsersIdUrl(id),
   {      
     ...options,
     method: 'DELETE'
     
     
   }
-)
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-  
-  const data: deleteUsersIdResponse['data'] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as deleteUsersIdResponse
-}
+);}
   
 

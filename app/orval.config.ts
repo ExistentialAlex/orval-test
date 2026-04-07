@@ -9,8 +9,16 @@ export default defineConfig({
       mode: 'tags-split',
       target: 'src/api/endpoints',
       schemas: 'src/api/models',
+      baseUrl: 'http://localhost:3000',
       client: 'fetch',
       mock: true,
+      override: {
+        mutator: {
+          path: './src/api/mutator/custom-instance.ts',
+          name: 'customInstance',
+        },
+
+      },
     },
     input: {
       target: '../server/openapi.json',

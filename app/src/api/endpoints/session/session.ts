@@ -10,6 +10,7 @@ import type {
   GetSession200
 } from '../../models';
 
+import { customInstance } from '../../mutator/custom-instance';
 
 /**
  * Get public session data.
@@ -31,25 +32,19 @@ export const getGetSessionUrl = () => {
 
   
 
-  return `/session`
+  return `http://localhost:3000/session`
 }
 
 export const getSession = async ( options?: RequestInit): Promise<getSessionResponse> => {
   
-  const res = await fetch(getGetSessionUrl(),
+  return customInstance<getSessionResponse>(getGetSessionUrl(),
   {      
     ...options,
     method: 'GET'
     
     
   }
-)
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-  
-  const data: getSessionResponse['data'] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as getSessionResponse
-}
+);}
   
 
 /**
@@ -72,24 +67,18 @@ export const getDeleteSessionUrl = () => {
 
   
 
-  return `/session`
+  return `http://localhost:3000/session`
 }
 
 export const deleteSession = async ( options?: RequestInit): Promise<deleteSessionResponse> => {
   
-  const res = await fetch(getDeleteSessionUrl(),
+  return customInstance<deleteSessionResponse>(getDeleteSessionUrl(),
   {      
     ...options,
     method: 'DELETE'
     
     
   }
-)
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-  
-  const data: deleteSessionResponse['data'] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as deleteSessionResponse
-}
+);}
   
 

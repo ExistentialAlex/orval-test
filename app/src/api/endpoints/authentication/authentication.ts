@@ -11,6 +11,7 @@ import type {
   PostAuthLoginBody
 } from '../../models';
 
+import { customInstance } from '../../mutator/custom-instance';
 
 /**
  * Login to the BFF.
@@ -39,12 +40,12 @@ export const getPostAuthLoginUrl = () => {
 
   
 
-  return `/auth/login`
+  return `http://localhost:3000/auth/login`
 }
 
 export const postAuthLogin = async (postAuthLoginBody: PostAuthLoginBody, options?: RequestInit): Promise<postAuthLoginResponse> => {
   
-  const res = await fetch(getPostAuthLoginUrl(),
+  return customInstance<postAuthLoginResponse>(getPostAuthLoginUrl(),
   {      
     ...options,
     method: 'POST',
@@ -52,12 +53,6 @@ export const postAuthLogin = async (postAuthLoginBody: PostAuthLoginBody, option
     body: JSON.stringify(
       postAuthLoginBody,)
   }
-)
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-  
-  const data: postAuthLoginResponse['data'] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as postAuthLoginResponse
-}
+);}
   
 
