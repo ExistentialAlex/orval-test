@@ -20,7 +20,7 @@
     "@nuxt/ui": "4.3.0",
     "@pinia/colada": "0.21.2",
     "@tanstack/vue-table": "8.21.3",
-    "@unhead/vue": "2.0.19",
+    "@unhead/vue": "2.1.12",
     "@vueuse/core": "14.1.0",
     "defu": "6.1.4",
     "destr": "2.0.5",
